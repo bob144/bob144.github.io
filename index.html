@@ -1,52 +1,27 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="da" lang="en">
 <head>
-  <title>Hello World!</title>
+<title>Login</title>
 </head>
-
 <body>
-<style>body {
-    background-color: #1E90FF;
-}
-h1 {
-    color: orange;
-    text-align: center;
-}
-ul {
-    color: orange;
-    text-align: left;
-    font-size: 20px;
-  
-}
-  
-</style>
-<h1>Hello World! </h1>
 
-<ul>
-  <li>hi1</li>
-  <li>hi2</li>
-  <li>hi3</li>
-</ul>
-<br>
-<marquee behavior="scroll" direction="left">
-<img src="http://www.ihop.com/menus/main-menu/pancakes/-/media/ihop/MenuItems/Pancakes/Original%20Buttermilk%20Pancakes/Original_%20Buttermilk_Pancakes.png?mh=367" alt="pancakes" /> 
-</marquee>
+<script type="text/javascript">
+function CheckPassword() {
+  var username=document.login.username.value;
+  var password=document.login.password.value;
+  location.href = username + password+'.htm';
+}
+</script>
 
- <table style="width:30%">
-  <tr>
-    <td>Patrick</td>
-    <td>100</td>
-  </tr>
-  <tr>
-    <td>Justin</td>
-    <td>0</td>
-  </tr>
-  </table>
- <br>
- <a href="https://www.youtube.com/watch?v=e_DqV1xdf-Y">UNLIMITED PANCAKES!</a> 
-<br>
-  <form action="Connector.html">
-  Answer: <input type="text" name="fname"><br>
-  <input type="submit" value="Submit">
+<form method="post" action="ingen_javascript.htm" 
+  onsubmit="CheckPassword();return false;" name="login">
+<pre>
+Username: <input type="text" name="username">
+Password: <input type="password" name="password">
+</pre>
+<input type="submit" value="log på" 
+  onclick="CheckPassword();return false;">
 </form>
+
 </body>
 </html>
