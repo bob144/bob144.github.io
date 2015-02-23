@@ -1,27 +1,200 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="da" lang="en">
-<head>
-<title>Login</title>
-</head>
-<body>
-
-<script type="text/javascript">
-function CheckPassword() {
-  var username=document.login.username.value;
-  var password=document.login.password.value;
-  location.href = username + password+'.htm';
+<html>
+  <head>
+      <script type="text/javascript">
+    </script>
+  </head>  
+  <canvas  width="50" height="50" style="border:1px solid black"></canvas>
+  <canvas id = "canvas1"  width="50" height="50" style="border:1px solid black" onclick="canvasClicked(1)"></canvas>
+  <body>
+  <h1>The </h1>
+  <h2>Very Basic</h2>
+  <h3> Tic - Tac - Toe!</h3>
+  <canvas>
+    <script type="text/javascript">
+02
+ 
+03
+//Global Variables
+04
+var painted;
+05
+var content;
+06
+var winningCombinations;
+07
+var turn = 0;
+08
+var theCanvas;
+09
+var c;
+10
+var cxt;
+11
+var squaresFilled = 0;
+12
+var w;
+13
+var y;
+14
+ 
+15
+//Instanciate Arrays
+16
+window.onload=function(){
+17
+     
+18
+    painted = new Array();
+19
+    content = new Array();
+20
+    winningCombinations = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+21
+ 
+22
+    for(var l = 0; l <= 8; l++){
+23
+    painted[l] = false;
+24
+    content[l]='';
+25
+    }
+26
 }
-</script>
+27
+ 
+28
+//Game methods
+29
+function canvasClicked(canvasNumber){
+30
+    theCanvas = "canvas"+canvasNumber;
+31
+    c = document.getElementById(theCanvas);
+32
+    cxt = c.getContext("2d");
+33
+ 
+34
+    if(painted[canvasNumber-1] ==false){
+35
+        if(turn%2==0){
+36
+            cxt.beginPath();
+37
+            cxt.moveTo(10,10);
+38
+            cxt.lineTo(40,40);
+39
+            cxt.moveTo(40,10);
+40
+            cxt.lineTo(10,40);
+41
+            cxt.stroke();
+42
+            cxt.closePath();
+43
+            content[canvasNumber-1] = 'X';
+44
+        }
+45
+ 
+46
+        else{
+47
+            cxt.beginPath();
+48
+            cxt.arc(25,25,20,0,Math.PI*2,true);
+49
+            cxt.stroke();
+50
+            cxt.closePath();
+51
+            content[canvasNumber-1] = 'O';
+52
+        }
+53
+ 
+54
+        turn++;
+55
+        painted[canvasNumber-1] = true;
+56
+        squaresFilled++;
+57
+        checkForWinners(content[canvasNumber-1]);
+58
+ 
+59
+        if(squaresFilled==9){
+60
+            alert("THE GAME IS OVER!");
+61
+            location.reload(true);
+62
+        }
+63
+     
+64
+    }
+65
+    else{
+66
+        alert("THAT SPACE IS ALREADY OCCUPIED WITH YOUR HEART!");
+67
+    }
+68
+ 
+69
+}
+70
+ 
+71
+function checkForWinners(symbol){
+72
+     
+73
+    for(var a = 0; a < winningCombinations.length; a++){
+74
+    if(content[winningCombinations[a][0]]==symbol&&content[winningCombinations[a][1]]== symbol&&content[winningCombinations[a][2]]==symbol){
+75
+        alert(symbol+ " WON!");
+76
+        playAgain();
+77
+    }
+78
+    }
+79
+ 
+80
+}
+81
+ 
+82
+function playAgain(){
+83
+    y=confirm("PLAY AGAIN?");
+84
+    if(y==true){
+85
+        alert("OKAY! ^^/>");
+86
+        location.reload(true);
+87
+    }
+88
+    else{
+89
+        alert("SO LONG,SUCKER!");
+90
+}
+91
+ 
+92
+}
 
-<form method="post" action="ingen_javascript.htm" 
-  onsubmit="CheckPassword();return false;" name="login">
-<pre>
-Username: <input type="text" name="username">
-Password: <input type="password" name="password">
-</pre>
-<input type="submit" value="log på" 
-  onclick="CheckPassword();return false;">
-</form>
-
-</body>
+  </canvas>
+ 
+  </body>
 </html>
