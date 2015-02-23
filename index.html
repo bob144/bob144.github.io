@@ -1,200 +1,231 @@
+<!DOCTYPE HTML>
+002
 <html>
-  <head>
-      <script type="text/javascript">
-    </script>
-  </head>  
-  <canvas  width="50" height="50" style="border:1px solid black"></canvas>
-  <canvas id = "canvas1"  width="50" height="50" style="border:1px solid black" onclick="canvasClicked(1)"></canvas>
-  <body>
-  <h1>The </h1>
-  <h2>Very Basic</h2>
-  <h3> Tic - Tac - Toe!</h3>
-  <canvas>
-    <script type="text/javascript">
-02
+003
+    <head>
+004
+        <link rel="stylesheet" type="text/css" href="css3.css"/>
+005
+        <script type="text/javascript">
+006
  
-03
-//Global Variables
-04
-var painted;
-05
-var content;
-06
-var winningCombinations;
-07
-var turn = 0;
-08
-var theCanvas;
-09
-var c;
-10
-var cxt;
-11
-var squaresFilled = 0;
-12
-var w;
-13
-var y;
-14
+007
+        //Global Variables
+008
+        var painted;
+009
+        var content;
+010
+        var winningCombinations;
+011
+        var turn = 0;
+012
+        var theCanvas;
+013
+        var c;
+014
+        var cxt;
+015
+        var squaresFilled = 0;
+016
+        var w;
+017
+        var y;
+018
  
-15
-//Instanciate Arrays
-16
-window.onload=function(){
-17
-     
-18
-    painted = new Array();
-19
-    content = new Array();
-20
-    winningCombinations = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-21
+019
+        //Instanciate Arrays
+020
+        window.onload=function(){
+021
+             
+022
+            painted = new Array();
+023
+            content = new Array();
+024
+            winningCombinations = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+025
  
-22
-    for(var l = 0; l <= 8; l++){
-23
-    painted[l] = false;
-24
-    content[l]='';
-25
-    }
-26
-}
-27
- 
-28
-//Game methods
-29
-function canvasClicked(canvasNumber){
-30
-    theCanvas = "canvas"+canvasNumber;
-31
-    c = document.getElementById(theCanvas);
-32
-    cxt = c.getContext("2d");
-33
- 
-34
-    if(painted[canvasNumber-1] ==false){
-35
-        if(turn%2==0){
-36
-            cxt.beginPath();
-37
-            cxt.moveTo(10,10);
-38
-            cxt.lineTo(40,40);
-39
-            cxt.moveTo(40,10);
-40
-            cxt.lineTo(10,40);
-41
-            cxt.stroke();
-42
-            cxt.closePath();
-43
-            content[canvasNumber-1] = 'X';
-44
+026
+            for(var l = 0; l <= 8; l++){
+027
+            painted[l] = false;
+028
+            content[l]='';
+029
+            }
+030
         }
-45
+031
  
-46
-        else{
-47
-            cxt.beginPath();
-48
-            cxt.arc(25,25,20,0,Math.PI*2,true);
-49
-            cxt.stroke();
-50
-            cxt.closePath();
-51
-            content[canvasNumber-1] = 'O';
-52
+032
+        //Game methods
+033
+        function canvasClicked(canvasNumber){
+034
+            theCanvas = "canvas"+canvasNumber;
+035
+            c = document.getElementById(theCanvas);
+036
+            cxt = c.getContext("2d");
+037
+ 
+038
+            if(painted[canvasNumber-1] ==false){
+039
+                if(turn%2==0){
+040
+                    cxt.beginPath();
+041
+                    cxt.moveTo(10,10);
+042
+                    cxt.lineTo(40,40);
+043
+                    cxt.moveTo(40,10);
+044
+                    cxt.lineTo(10,40);
+045
+                    cxt.stroke();
+046
+                    cxt.closePath();
+047
+                    content[canvasNumber-1] = 'X';
+048
+                }
+049
+ 
+050
+                else{
+051
+                    cxt.beginPath();
+052
+                    cxt.arc(25,25,20,0,Math.PI*2,true);
+053
+                    cxt.stroke();
+054
+                    cxt.closePath();
+055
+                    content[canvasNumber-1] = 'O';
+056
+                }
+057
+ 
+058
+                turn++;
+059
+                painted[canvasNumber-1] = true;
+060
+                squaresFilled++;
+061
+                checkForWinners(content[canvasNumber-1]);
+062
+ 
+063
+                if(squaresFilled==9){
+064
+                    alert("THE GAME IS OVER!");
+065
+                    location.reload(true);
+066
+                }
+067
+             
+068
+            }
+069
+            else{
+070
+                alert("THAT SPACE IS ALREADY OCCUPIED WITH YOUR HEART!");
+071
+            }
+072
+ 
+073
         }
-53
+074
  
-54
-        turn++;
-55
-        painted[canvasNumber-1] = true;
-56
-        squaresFilled++;
-57
-        checkForWinners(content[canvasNumber-1]);
-58
+075
+        function checkForWinners(symbol){
+076
+             
+077
+            for(var a = 0; a < winningCombinations.length; a++){
+078
+            if(content[winningCombinations[a][0]]==symbol&&content[winningCombinations[a][1]]== symbol&&content[winningCombinations[a][2]]==symbol){
+079
+                alert(symbol+ " WON!");
+080
+                playAgain();
+081
+            }
+082
+            }
+083
  
-59
-        if(squaresFilled==9){
-60
-            alert("THE GAME IS OVER!");
-61
-            location.reload(true);
-62
+084
         }
-63
-     
-64
-    }
-65
-    else{
-66
-        alert("THAT SPACE IS ALREADY OCCUPIED WITH YOUR HEART!");
-67
-    }
-68
+085
  
-69
-}
-70
+086
+        function playAgain(){
+087
+            y=confirm("PLAY AGAIN?");
+088
+            if(y==true){
+089
+                alert("OKAY! ^^/>");
+090
+                location.reload(true);
+091
+            }
+092
+            else{
+093
+                alert("SO LONG,SUCKER!");
+094
+        }
+095
  
-71
-function checkForWinners(symbol){
-72
-     
-73
-    for(var a = 0; a < winningCombinations.length; a++){
-74
-    if(content[winningCombinations[a][0]]==symbol&&content[winningCombinations[a][1]]== symbol&&content[winningCombinations[a][2]]==symbol){
-75
-        alert(symbol+ " WON!");
-76
-        playAgain();
-77
-    }
-78
-    }
-79
+096
+        }
+097
  
-80
-}
-81
+098
  
-82
-function playAgain(){
-83
-    y=confirm("PLAY AGAIN?");
-84
-    if(y==true){
-85
-        alert("OKAY! ^^/>");
-86
-        location.reload(true);
-87
-    }
-88
-    else{
-89
-        alert("SO LONG,SUCKER!");
-90
-}
-91
- 
-92
-}
-
-  </canvas>
- 
-  </body>
+099
+        </script>
+100
+    </head>
+101
+    <body>
+102
+        <div id ="box">
+103
+            <h1>THE</h1><h2> VERY BASIC</h2><h3> TIC - TAC - TOE!</h3>
+104
+            <canvas id = "canvas1"  width="50" height="50" style="border:1px solid black" onclick="canvasClicked(1)"></canvas>
+105
+            <canvas id = "canvas2"  width="50" height="50" style="border:1px solid black" onclick="canvasClicked(2)"></canvas>
+106
+            <canvas id = "canvas3"  width="50" height="50" style="border:1px solid black" onclick="canvasClicked(3)"></canvas><br/>
+107
+            <canvas id = "canvas4"  width="50" height="50" style="border:1px solid black" onclick="canvasClicked(4)"></canvas>
+108
+            <canvas id = "canvas5"  width="50" height="50" style="border:1px solid black" onclick="canvasClicked(5)"></canvas>
+109
+            <canvas id = "canvas6"  width="50" height="50" style="border:1px solid black" onclick="canvasClicked(6)"></canvas><br/>
+110
+            <canvas id = "canvas7"  width="50" height="50" style="border:1px solid black" onclick="canvasClicked(7)"></canvas>
+111
+            <canvas id = "canvas8"  width="50" height="50" style="border:1px solid black" onclick="canvasClicked(8)"></canvas>
+112
+            <canvas id = "canvas9"  width="50" height="50" style="border:1px solid black" onclick="canvasClicked(9)"></canvas>
+113
+        </div>
+114
+    </body>
+115
 </html>
+
+ 
