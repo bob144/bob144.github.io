@@ -430,23 +430,11 @@ td.cell {
 </table>
 </td><td valign=top>
 <h1>Tic-Tac-Toe</h1>
-<table border=1 cellpadding=3>
-<tr>
-<th>Player</th>
-<th>First</th>
-<th>Type</th>
-<th>Wins</th>
-<th>Record</th>
-</tr><tr>
-<th class=player>X</th>
+
 <td><input type=radio name=firstMove value=X checked onchange="newGame();"></td>
 <td><select name=p1 onchange="newGame()">
-<option value=1 selected>Human
-<option value=2>Novice
-<option value=3>Intermediate
-<option value=4>Experienced
-<option value=5>Expert
-</select></td>
+
+
 <td align=right><input type=button name=xWon class=winstat value="0"></td>
 <td align=right><input type=button name=xWonPer class=winstat value="0%"></td>
 </tr><tr>
@@ -454,10 +442,7 @@ td.cell {
 <td><input type=radio name=firstMove value=O onchange="newGame();"></td>
 <td><select name=p2 onchange="newGame()">
 <option value=1>Human
-<option value=2>Novice
-<option value=3 selected>Intermediate
-<option value=4>Experienced
-<option value=5>Expert
+
 </select></td>
 <td align=right><input type=button name=oWon class=winstat value="0"></td>
 <td align=right><input type=button name=oWonPer class=winstat value="0"></td>
