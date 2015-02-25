@@ -4,7 +4,7 @@
 <title>Tic-Tac-Toe</title>
 <meta name="description" content="The game of Tic-Tac-Toe written in JavaScript to be played in the web browser, with computer challengers of varying skill.">
 <meta name="keywords" content="tic-tac-toe javascript, javascript tic-tac-toe, tic-tac-toe, tictactoe, game of tic-tac-toe">
-<link rel="shortcut icon" href="https://lh3.googleusercontent.com/-4FzI8EK_ZgM/AAAAAAAAAAI/AAAAAAAAABk/tjM9ECpah4o/photo.jpg" type="image/x-icon">
+<link rel="shortcut icon" href="http://ostermiller.org/favicon.ico" type="image/x-icon">
 
 <script type="text/javascript" language=javascript><!--
 var turn = -1;
@@ -16,7 +16,6 @@ function makeCells(){
     var b = document.board;
     cells = new Array(b.c1,b.c2,b.c3,b.c4,b.c5,b.c6,b.c7,b.c8,b.c9)
 }
-
 function loadStats(){
     var cookie = getCookie('tictactoeStats');
     if (cookie != null && cookie.length > 1){
@@ -34,7 +33,6 @@ function loadStats(){
         }
     }
 }
-
 function nextTurn(){
     turn = -turn;
     if (turn == 1){
@@ -49,7 +47,6 @@ function nextTurn(){
         if(document.board.p2.selectedIndex == 4) perfectMove();
     }
 }
-
 function getLegalMoves(state){
     var moves = 0;
     for (var i=0; i<9; i++){
@@ -59,7 +56,6 @@ function getLegalMoves(state){
     }
     return moves;
 }
-
 function moveRandom(moves){
     var numMoves = 0;
     for (var i=0; i<9; i++){
@@ -77,7 +73,6 @@ function moveRandom(moves){
         }
     }
 }
-
 function openingBook(state){
     var mask = state & 0x2AAAA;	
     if (mask == 0x00000) return 0x1FF;
@@ -92,7 +87,6 @@ function openingBook(state){
     if (mask == 0x08000) return 0x152;
     return 0;
 }
-
 function perfectMove(){
     var state = getState();
     var winner = detectWin(state);
@@ -117,7 +111,6 @@ function perfectMove(){
         moveRandom(goodMoves);
     }
 }
-
 function moveValue(istate, move, moveFor, nextTurn, limit, depth){
     var state = stateMove(istate, move, nextTurn);
     var winner = detectWin(state);
@@ -145,20 +138,17 @@ function moveValue(istate, move, moveFor, nextTurn, limit, depth){
     }
     return hope;
 }
-
 function detectWinMove(state, cellNum, nextTurn){
     var value = 0x3;
     if (nextTurn == -1) value = 0x2;
     var newState = state | (value << cellNum*2);
     return detectWin(newState);
 }
-
 function beginnerMove(){
     var state = getState();
     var winner = detectWin(state);
     if (winner == 0) moveRandom(getLegalMoves(state));
 }
-
 function getGoodMove(state){
 	var moves = getLegalMoves(state);
     for (var i=0; i<9; i++){
@@ -179,8 +169,6 @@ function getGoodMove(state){
     }
     return moves;
 }
-
-
 function intermediateMove(){
     var state = getState();
     var winner = detectWin(state);
@@ -188,7 +176,6 @@ function intermediateMove(){
         moveRandom(getGoodMove(state));
     }
 }
-
 function experiencedMove(){
     var state = getState();
     var winner = detectWin(state);
@@ -199,7 +186,6 @@ function experiencedMove(){
         moveRandom(moves);
     }
 }
-
 function getState(){
     var state = 0;
     for (var i=0; i<9; i++){
@@ -211,7 +197,6 @@ function getState(){
     }
     return state;
 }
-
 function detectWin(state){
     if ((state & 0x3F000) == 0x3F000) return 0x13F000;
     if ((state & 0x3F000) == 0x2A000) return 0x22A000;
@@ -232,7 +217,6 @@ function detectWin(state){
     if ((state & 0x2AAAA) == 0x2AAAA) return 0x300000;
     return 0;
 }
-
 function recordWin(winner){
     if ((winner & 0x300000) == 0x100000){
         xWon++;
@@ -243,7 +227,6 @@ function recordWin(winner){
     }
     drawStats();
 }
-
 function drawStats(){
     var b = document.board;
 	var totalGames = xWon + oWon + catsGame;
@@ -263,14 +246,12 @@ function drawStats(){
         '; expires=' + expires.toGMTString()
     );
 }
-
 function clearStats(){
 	xWon = 0;
     oWon = 0;
     catsGame = 0;
     drawStats();
 }
-
 function drawState(state){
     var winner = detectWin(state);
     if ((winner & 0x300000) != 0){
@@ -306,13 +287,11 @@ function drawState(state){
         cells[i].value = value;
     }
 }
-
 function stateMove(state, move, nextTurn){
     var value = 0x3;
     if (nextTurn == -1) value = 0x2;
     return (state | (value << (move*2)));
 }
-
 function move(cell){
     if (cell.value == ''){
         var state = getState();
@@ -337,7 +316,6 @@ function countMoves(state){
     }
     return count;
 }
-
 function newGame(){
     var state = getState();
     var winner = detectWin(state);
@@ -354,7 +332,6 @@ function newGame(){
     }
     nextTurn();
 }
-
 function getCookie(name) {
   var prefix = name + "=";
   var begin = document.cookie.indexOf("; " + prefix);
@@ -408,7 +385,7 @@ td.cell {
 </style>
 
 </head>
-<body onload="makeCells();;newGame();">
+<body onload="makeCells();loadStats();newGame();">
 
 <noscript><p style="color:red;">You must enable javascript to be able to play tic-tac-toe.</p></noscript>
 <form name=board onsubmit="return false;">
@@ -430,31 +407,35 @@ td.cell {
 </table>
 </td><td valign=top>
 <h1>Tic-Tac-Toe</h1>
-
-
-
-
-
+<table border=1 cellpadding=3>
+<tr>
+<th>Player</th>
+<th>First</th>
+<th>Type</th>
+<th>Wins</th>
+<th>Record</th>
+</tr><tr>
+<th class=player>X</th>
+<td><input type=radio name=firstMove value=X checked onchange="newGame();"></td>
+<td><select name=p1 onchange="newGame()">
+<option value=1 selected>Human
+<option value=2>Novice
+<option value=3>Intermediate
+<option value=4>Experienced
+<option value=5>Expert
+</select></td>
+<td align=right><input type=button name=xWon class=winstat value="0"></td>
+<td align=right><input type=button name=xWonPer class=winstat value="0%"></td>
 </tr><tr>
 <th class=player>O</th>
-
-
-
-
+<td><input type=radio name=firstMove value=O onchange="newGame();"></td>
+<td><select name=p2 onchange="newGame()">
+<option value=1>Human
+<option value=2>Novice
+<option value=3 selected>Intermediate
+<option value=4>Experienced
+<option value=5>Expert
 </select></td>
-<td align=right><input type=button name=oWon class=winstat value="0"></td>
-<td align=right><input type=button name=oWonPer class=winstat value="0"></td>
-</tr><tr>
-<th></th>
-<td></td>
-<td></td>
-<td align=right><input type=button name=catsGame class=winstat value="0"></td>
-<td align=right><input type=button name=catsGamePer class=winstat value="0"></td>
-</tr></table>
-
-<p><input type=button name=newgame value="New Game" accesskey=n onclick="newGame();"><p>
-</td></tr></table>
-</form>
 <td align=right><input type=button name=oWon class=winstat value="0"></td>
 <td align=right><input type=button name=oWonPer class=winstat value="0"></td>
 </tr><tr>
@@ -468,11 +449,19 @@ td.cell {
 <p><input type=button name=newgame value="New Game" accesskey=n onclick="newGame();"><p>
 </td></tr></table>
 </form>
+
+<hr>
+
+<h3>See Also</h3>
+<p><a href="http://ostermiller.org/tictactoeexpert.html">Tic Tac Toe strategy guide</a> - Learn how to win.</p>
+<p><a href="http://ostermiller.org/games.html">Other games</a> such as <a href="http://qqwing.com/">Sudoku</a> or <a href="http://ostermiller.org/ladder/">Ladder</a>.</p>
+
 <hr>
 
 
 
-<hr>
+
+<div style="padding:0.2cm;"><a href="http://ostermiller.org/calc/">More converters, calculators, and other JavaScript goodies</a></div>
 
 </body>
 </html>
