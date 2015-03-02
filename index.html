@@ -227,7 +227,94 @@ function recordWin(winner){
     }
     drawStats();
 }
-
+function drawStats(){
+    var b = document.board;
+	var totalGames = xWon + oWon + catsGame;
+    b.xWon.value = xWon;
+    b.oWon.value = oWon;
+    b.catsGame.value = catsGame;
+	b.xWonPer.value = ((xWon==0)?0:(Math.round(xWon * 1000 / totalGames) / 10)) + '%';
+    b.oWonPer.value = ((oWon==0)?0:(Math.round(oWon * 1000 / totalGames) / 10)) + '%';
+    b.catsGamePer.value = ((catsGame==0)?0:(Math.round(catsGame * 1000 / totalGames) / 10)) + '%';
+    var cookie = ':' + xWon + ':' + oWon + ':' + catsGame;
+    var expires = new Date();
+    // cookie expires in one year
+    expires.setTime(expires.getTime() + 365 * 24 * 60 * 60 * 1000);
+    document.cookie = (
+        'tictactoeStats' + '=' +
+        escape(cookie) +
+        '; expires=' + expires.toGMTString()
+    );
+}
+function clearStats(){
+	xWon = 0;
+    oWon = 0;
+    catsGame = 0;
+    drawStats();
+}
+function drawState(state){
+    var winner = detectWin(state);
+    if ((winner & 0x300000) != 0){
+        if ((winner & 0x300000) == 0x100000){
+            xWon++;
+        } else if ((winner & 0x300000) == 0x200000){
+            oWon++;
+        } else {
+            catsGame++;
+        }
+        drawStats();
+    }
+    for (var i=0; i<9; i++){
+        var value = '';
+        if ((state & (1<<(i*2+1))) != 0){
+            if ((state & (1<<(i*2))) != 0){
+                value = 'X';
+            } else {
+                value = 'O';
+            }
+        }
+        if ((winner & (1<<(i*2+1))) != 0){
+            if (cells[i].style){
+                cells[i].style.backgroundColor='red';
+            } else {
+                value = '*' + value + '*';
+            }
+        } else {
+            if (cells[i].style){
+                cells[i].style.backgroundColor='green';
+            }
+        }
+        cells[i].value = value;
+    }
+}
+function stateMove(state, move, nextTurn){
+    var value = 0x3;
+    if (nextTurn == -1) value = 0x2;
+    return (state | (value << (move*2)));
+}
+function move(cell){
+    if (cell.value == ''){
+        var state = getState();
+        var winner = detectWin(state);
+        if (winner == 0){
+            for (var i=0; i<9; i++){
+                if (cells[i] == cell){
+                    state = stateMove(state, i, turn);
+                }
+            }
+            drawState(state);
+            nextTurn();
+        }
+    }
+}
+function countMoves(state){
+    var count = 0;
+    for (var i=0; i<9; i++){
+        if ((state & (1<<(i*2+1))) != 0){
+           count++;
+        }
+    }
+    return count;
 }
 function newGame(){
     var state = getState();
@@ -336,8 +423,7 @@ td.cell {
 <th>Cat</th>
 <td></td>
 <td></td>
-<td align=right><input type=button name=catsGame class=winstat value="0"></td>
-<td align=right><input type=button name=catsGamePer class=winstat value="0"></td>
+
 </tr></table>
 <p align=right><input type=button name=newgame value="Clear Stats" accesskey=c onclick="clearStats();"></p>
 <p><input type=button name=newgame value="New Game" accesskey=n onclick="newGame();"><p>
