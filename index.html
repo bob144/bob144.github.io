@@ -6,7 +6,12 @@
 <meta name="keywords" content="tic-tac-toe javascript, javascript tic-tac-toe, tic-tac-toe, tictactoe, game of tic-tac-toe">
 <link rel="shortcut icon" href="http://www.meshbelt.com/X.gif" type="image/x-icon">
 
-
+<script type="text/javascript" language=javascript><!--
+var turn = -1;
+var xWon = 0;
+var oWon = 0;
+var catsGame = 0;
+var cells;
 function makeCells(){
     var b = document.board;
     cells = new Array(b.c1,b.c2,b.c3,b.c4,b.c5,b.c6,b.c7,b.c8,b.c9)
